@@ -12,8 +12,19 @@ def game():
 
 
 if __name__ == "__main__":
-    # game()
-    num = 0
+    game()
     while True:
-        num += 1
-        print(f"SPAM -- {num}")
+        print("Бажаєте продовжити?\n"
+              "1 - Так\n"
+              "2 - Ні\n\n")
+        ch = int(input("Зробіть свій вибір: "))
+
+        if ch == 1:
+            game()
+            continue
+        elif ch == 2:
+            print('---- GAME OVER ----')
+            break
+        else:
+            print("Ви зробили не вірний вибір!")
+            continue
