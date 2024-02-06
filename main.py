@@ -12,19 +12,25 @@ def game():
 
 
 if __name__ == "__main__":
-    game()
-    while True:
-        print("Бажаєте продовжити?\n"
-              "1 - Так\n"
-              "2 - Ні\n\n")
-        ch = int(input("Зробіть свій вибір: "))
+    # game()
+    # while True:
+    #     print("Бажаєте продовжити?\n"
+    #           "1 - Так\n"
+    #           "2 - Ні\n\n")
+    #     ch = int(input("Зробіть свій вибір: "))
+    #
+    #     if ch == 1:
+    #         game()
+    #         continue
+    #     elif ch == 2:
+    #         print('---- GAME OVER ----')
+    #         break
+    #     else:
+    #         print("Ви зробили не вірний вибір!")
+    #         continue
+    #
 
-        if ch == 1:
-            game()
-            continue
-        elif ch == 2:
-            print('---- GAME OVER ----')
-            break
-        else:
-            print("Ви зробили не вірний вибір!")
-            continue
+    data = input("Введіть прізвище та ім'я: ")
+    print(data.title())
+    # Input: jOhn doE
+    # Output: John Doe
