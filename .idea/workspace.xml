@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a57d5f8-4e16-42a5-9b7c-6a86b3594935" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/4322_pyhon_lesson.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/4322_pyhon_lesson.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +32,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "03__02__24__github__function",
+    "git-widget-placeholder": "10__02__24__bots__start",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
