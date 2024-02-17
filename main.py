@@ -1,56 +1,61 @@
-import random
+import asyncio
+import logging
+import sys
+from os import getenv
 
-# user_first_name = input("Enter your name: ")
-# user_last_name = input("Enter your lastname: ")
-# user_fathers_name = input("Enter your father's name: ")
-# user_age = int(input("Enter your age: "))
+from aiogram import Bot, Dispatcher, Router, types
+from aiogram.enums import ParseMode
+from aiogram.filters import CommandStart
+from aiogram.types import Message
+from aiogram.types.reply_keyboard_markup import ReplyKeyboardMarkup
+from aiogram.types.keyboard_button import KeyboardButton
+from aiogram.utils.markdown import hbold
 
-##### ARRAYS
-users_list = ["test", 12, 16, True]
-users_list.append("banana")  # add element to end
-users_list.pop()  # remove element from end array
-# print(len(users_list))
-# print(users_list[0])
-# print(users_list[2])
-# for item in users_list:
-#     if item == 12:
-#         print("It's twelfth!")
-#         break
-#     continue
+# Bot token can be obtained via https://t.me/BotFather
+TOKEN = "6477583316:AAGRySJYkGA1fS5x_2mO-agnp9GoPps3NoU"
 
-###### OBJECTS
+# All handlers should be attached to the Router (or Dispatcher)
+dp = Dispatcher()
+# Initialize Bot instance with a default parse mode which will be passed to all API calls
+bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
 
-# user["city"] = "Dro"
-# del user["last_name"]
-# print(user)
 
-#### ARRAY of LISTS
-citizens = []
-count = 0
-while count < 1000000:
-    print(
-        f'circle: {count}'
+# --- REPLY MENU MARKUP ---
+def r_main_menu():
+    kb = ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Про нас🤭")],
+            [KeyboardButton(text="test2"), KeyboardButton(text="test3")]
+        ],
+        resize_keyboard=True
     )
-    user = {
-        "first_name": "John",
-        "last_name": "Doe",
-        "age": 35,
-        "qty_children": random.randint(0, 8)
-    }
-    citizens.append(user)
-    count += 1
-    pass
+    return kb
 
-child_free_counter = 0
-many_children_counter = 0
-for human in citizens:
-    if human['qty_children'] == 0:
-        child_free_counter += 1
-        continue
-    elif human['qty_children'] >= 3:
-        many_children_counter += 1
-        continue
-    continue
 
-print("_CFC: ", child_free_counter)
-print("_AOC: ", many_children_counter)
+@dp.message(CommandStart())
+async def command_start_handler(message: Message) -> None:
+    await message.answer("Hello! I'm live!", reply_markup=r_main_menu())
+
+
+@dp.message()
+async def reply_kb_handler(message: types.Message) -> None:
+    msg = message.text
+    cid = message.from_user.id
+    if msg == "Про нас🤭":
+        # await bot.send_message(cid, "Some Text")
+        text = ("Adjust previously added buttons to specific row sizes.\n"
+                "\n"
+                "By default, when the sum of passed sizes is lower than buttons count the last one size will be used "
+                "for tail of the markup. If repeat=True is passed - all sizes will be cycled when available more "
+                "buttons count than all sizes")
+        await message.answer(text)
+
+
+async def main() -> None:
+    # And the run events dispatching
+    await dp.start_polling(bot)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    asyncio.run(main())
