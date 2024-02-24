@@ -9,10 +9,11 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.types.reply_keyboard_markup import ReplyKeyboardMarkup
 from aiogram.types.keyboard_button import KeyboardButton
-from aiogram.utils.markdown import hbold
+from aiogram.types.inline_keyboard_markup import InlineKeyboardMarkup
+from aiogram.types.inline_keyboard_button import InlineKeyboardButton
 
 # Bot token can be obtained via https://t.me/BotFather
-TOKEN = "6477583316:AAGRySJYkGA1fS5x_2mO-agnp9GoPps3NoU"
+TOKEN = "6477583316:AAGJ-3-vjxRhVmzAkaiFFHqkr95mtO15Hk4"
 
 # All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
@@ -25,11 +26,46 @@ def r_main_menu():
     kb = ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Про нас🤭")],
-            [KeyboardButton(text="test2"), KeyboardButton(text="test3")]
+            [KeyboardButton(text="Під-меню"), KeyboardButton(text="Inline Menu")]
         ],
         resize_keyboard=True
     )
     return kb
+
+
+def r_sub_menu():
+    kb = ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Item1")],
+            [KeyboardButton(text="Item2"), KeyboardButton(text="Item3")],
+            [KeyboardButton(text="Item4"), KeyboardButton(text="Item5")],
+            [KeyboardButton(text="Назад")]
+        ],
+        resize_keyboard=True
+    )
+    return kb
+
+
+# --- INLINE MENU ---
+def i_test_menu():
+    kb = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="Item1", callback_data="itm1"),
+             InlineKeyboardButton(text="Item2", callback_data="itm2")],
+            [InlineKeyboardButton(text="Show Sub Menu", callback_data="sub_menu")]
+        ]
+    )
+    return kb
+
+
+@dp.callback_query(lambda c: c.data)
+async def process_callback(callback_query: types.CallbackQuery):
+    data = callback_query.data
+    chat_id = callback_query.from_user.id
+    if data == "itm1":
+        await bot.send_message(chat_id, "It's working!!")
+    elif data == "sub_menu":
+        await bot.send_message(chat_id, "This is submenu!", reply_markup=r_sub_menu())
 
 
 @dp.message(CommandStart())
@@ -49,6 +85,12 @@ async def reply_kb_handler(message: types.Message) -> None:
                 "for tail of the markup. If repeat=True is passed - all sizes will be cycled when available more "
                 "buttons count than all sizes")
         await message.answer(text)
+    elif msg == "Під-меню":
+        await message.answer("Ви перейшли в під меню!", reply_markup=r_sub_menu())
+    elif msg == "Назад":
+        await message.answer("Ви повернуль назад", reply_markup=r_main_menu())
+    elif msg == "Inline Menu":
+        await message.answer("Це приклад повідомлення з інлайн меню", reply_markup=i_test_menu())
 
 
 async def main() -> None:
